@@ -1,11 +1,5 @@
-CREATE OR ALTER PROCEDURE InsertOrUpdateAddressInformation
-	@UserId INT,
-	@AddressType VARCHAR(100),
-	@Country VARCHAR(100),
-	@StateOrProvince VARCHAR(100),
-	@City VARCHAR(100),
-	@DoorNoStreet VARCHAR(100),
-	@Pincode VARCHAR(10)
+CREATE OR ALTER PROCEDURE InsertAddressInformation
+	@AddressInfos AddressInfoTableType READONLY
 AS
 BEGIN
 	-- Prevent excessive message logging
@@ -15,29 +9,71 @@ BEGIN
     IF TRIGGER_NESTLEVEL() > 1
         RETURN;
 
-	-- Check if the record already exists in the UserInterests table
-    IF EXISTS (SELECT 1 FROM AddressInformation WHERE UserId = @UserId)
+	-- Step 1: Update existing records
 	BEGIN
-		UPDATE AddressInformation
-		SET
-			AddressType = @AddressType,
-			Country = @Country,
-			StateOrProvince = @StateOrProvince,
-			City = @City,
-			DoorNoStreet = @DoorNoStreet,
-			Pincode = @Pincode
-
-		WHERE
-			UserId = @UserId
-
-		PRINT 'Record updated successfully';
+	UPDATE AD
+	SET
+		AD.AddressType = src.AddressType,
+		AD.Country = src.Country,
+		AD.StateOrProvince = src.StateOrProvince,
+		AD.City = src.City,
+		AD.DoorNoStreet = src.DoorNoStreet,
+		AD.Pincode = src.Pincode
+	FROM AddressInformation AD
+	INNER JOIN @AddressInfos src
+		ON AD.UserId = src.UserId
+		WHERE AD.Id = src.AddressId;
 	END;
 
-	ELSE
+	
 	BEGIN
-		INSERT INTO AddressInformation (AddressType, Country, StateOrProvince, City, DoorNoStreet, Pincode)
-		VALUES (@AddressType, @Country, @StateOrProvince, @City, @DoorNoStreet, @Pincode);
-
-		PRINT 'Record inserted successfully';
+		INSERT INTO AddressInformation (UserId, AddressType, Country, StateOrProvince, City, DoorNoStreet, Pincode)
+		SELECT
+			src.UserId,
+			src.AddressType,
+			src.Country,
+			src.StateOrProvince,
+			src.City,
+			src.DoorNoStreet,
+			src.Pincode
+		FROM @AddressInfos src
+		WHERE NOT EXISTS (
+			SELECT 1
+			FROM AddressInformation AD
+			WHERE AD.UserId = src.UserId
+		);
 	END;
 END;
+
+
+CREATE TYPE AddressInfoTableType AS TABLE
+	(
+		UserId INT NOT NULL,
+		AddressId INT NOT NULL,
+		AddressType VARCHAR(100),
+		Country VARCHAR(100),
+		StateOrProvince VARCHAR(100),
+		City VARCHAR(100),
+		DoorNoStreet VARCHAR(100),
+		Pincode VARCHAR(10)
+	);
+
+
+EXEC InsertAddressInformation
+	@UserId = 2,
+	@AddressType = 'Premanent',
+	@Country = 'India',
+	@StateOrProvince = 'TN',
+	@City = 'Tuty',
+	@DoorNoStreet = '10, East car street',
+	@Pincode = '620051'
+
+
+	------------------------------------------------------------------------------------------------------------------------------
+DECLARE @AddressInfos AddressInfoTableType;
+
+INSERT INTO @AddressInfos (UserId, AddressType, Country, StateOrProvince, City, DoorNoStreet, Pincode)
+VALUES
+    (2, 'Premanent Update', 'India', 'TN', 'Tuty', '10, East Car Street', '628002');
+
+EXEC dbo.InsertAddressInformation @AddressInfos = @AddressInfos;

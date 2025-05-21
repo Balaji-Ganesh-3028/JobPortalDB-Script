@@ -43,11 +43,46 @@ VALUES
 DELETE FROM DemographicInformation;
 DELETE FROM UserInterest;
 
+DELETE FROM AddressInformation;
+DELETE FROM ExperienceInformation;
+DELETE FROM EducationInformation;
+
 DROP TABLE DemographicInformation;
 DROP TABLE UserInterest;
+DROP TABLE AddressInformation;
+DROP TABLE ExperienceInformation;
+DROP TABLE EducationInformation;
 
 SELECT * FROM DemographicInformation;
 SELECT * FROM UserInterest;
+SELECT * FROM EducationInformation;
+SELECT * FROM ExperienceInformation;
+SELECT * FROM AddressInformation;
+
+
+------DROP TVP AND PROCEDURE-------
+--EXPERIENCE 
+DROP PROCEDURE IF EXISTS InsertExperienceInformation;
+DROP TYPE IF EXISTS ExperienceInfoTableType;
+
+--EDUCATION
+DROP PROCEDURE IF EXISTS InsertEducationInformation;
+DROP TYPE IF EXISTS EducationInfoTableType
+
+--ADDRESS
+DROP PROCEDURE IF EXISTS InsertAddressInformation
+DROP TYPE IF EXISTS AddressInfoTableType
+
+
+-- Truncate the table
+TRUNCATE TABLE UserInterest;
+TRUNCATE TABLE DemographicInformation;
+
+
+-- Reset the identity column
+DBCC CHECKIDENT ('UserInterest', RESEED, 1);
+DBCC CHECKIDENT ('DemographicInformation', RESEED, 1);
+
 
 SELECT 
 	Demo.FirstName,
@@ -75,3 +110,62 @@ ON
 	Inte.UserId = Demo.Id
 WHERE
 	Inte.Interest = 'Cricket';
+
+
+
+
+
+	
+EXEC InsertOrUpdateDemographicInformation 
+    @FirstName = 'John', 
+    @LastName = 'Doeqqqq', 
+    @Email = 'joh11111n.doe@example.com', 
+    @Salutation = 'Mr.', 
+    @Gender = 'Male';
+
+EXEC InsertOrUpdateDemographicInformation 
+    @FirstName = 'Divya', 
+    @LastName = 'Bharathi', 
+    @Email = 'divya.bharathi@kanini.com', 
+    @Salutation = 'Ms.', 
+    @Gender = 'Female';
+
+EXEC InsertOrUpdateDemographicInformation 
+    @FirstName = 'Sai', 
+    @LastName = 'Priya', 
+    @Email = 'sai.priya@kanini.com', 
+    @Salutation = 'Ms.', 
+    @Gender = 'Female';
+
+SELECT * FROM DemographicInformation;
+
+delete  [dbo].[UserInterest]
+
+Select * from [dbo].[UserInterest] where [USERID] = 1
+
+CREATE OR ALTER PROCEDURE dbo.InsertUserInterests  
+    @UserInterests [dbo].[INTREST_LIST] READONLY  
+AS  
+BEGIN  
+    SET NOCOUNT ON;
+
+    INSERT INTO [dbo].[UserInterest] (UserId, Interest)  
+    SELECT UI.[USERID], UI.[INTREST_ID] 
+    FROM @UserInterests UI
+    WHERE NOT EXISTS (
+        SELECT 1 
+        FROM [dbo].[UserInterest] U 
+        WHERE U.UserId = UI.[USERID] AND U.Interest = UI.[INTREST_ID]
+    );
+END;
+
+
+
+DECLARE @MyUserInterests AS [dbo].[INTREST_LIST] ;
+
+INSERT INTO @MyUserInterests ([USERID],[INTREST_ID] )
+VALUES (1, 1001), (1, 1002), (1, 1003);
+SELECT * FROM @MyUserInterests
+
+EXEC dbo.InsertUserInterests @UserInterests = @MyUserInterests;
+

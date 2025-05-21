@@ -10,7 +10,7 @@ BEGIN
     END
 
     SELECT
-        di.FirstName, di.LastName, di.Email, di.Salutation, di.Gender,
+        di.Id AS UserId, di.FirstName, di.LastName, di.Email, di.Salutation, di.Gender,
         STRING_AGG(ui.Interest, ', ') AS Interests,
         ei.CredentialInfo, ei.DegreeCertificate, ei.Institution, ei.City AS EducationCity, ei.StateOrProvince AS EducationState,
         exi.Employer, exi.DOJ, exi.JobRole, exi.DurationInMonth,
@@ -28,9 +28,9 @@ BEGIN
     WHERE
         di.Id = @UserId
     GROUP BY
-        di.FirstName, di.LastName, di.Email, di.Salutation, di.Gender,
-        ei.CredentialInfo, ei.DegreeCertificate, ei.Institution, ei.City, ei.StateOrProvince,
-        exi.Employer, exi.DOJ, exi.JobRole, exi.DurationInMonth,
-        ai.AddressType, ai.Country, ai.StateOrProvince, ai.City, ai.DoorNoStreet, ai.Pincode;
+        di.Id, di.FirstName, di.Email;
+		
 END;
 
+EXEC ToGetUserDetail
+	@UserId = 9

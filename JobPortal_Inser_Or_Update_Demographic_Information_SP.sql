@@ -12,9 +12,18 @@ BEGIN
     IF TRIGGER_NESTLEVEL() > 1
         RETURN;
 
+    -- Declare a variable to track operation type
+    DECLARE @OperationType VARCHAR(20);
+    --DECLARE @InseteredId INT;
+	declare @InseteredId table (ID int)
+
+	
+
     -- CHECK IF A RECORD EXISTS IN THE DEMOGRAPHIC INFORMATION TABLE --
     IF EXISTS (SELECT 1 FROM DemographicInformation WHERE Email = @Email)
     BEGIN
+        SET @OperationType = 'Updated';
+
         -- UPDATE THE EXISTING RECORD
         UPDATE DemographicInformation
         SET 
@@ -22,40 +31,33 @@ BEGIN
             LastName = @LastName,
             Salutation = @Salutation,
             Gender = @Gender
+			OUTPUT INSERTED.Id into @InseteredId
         WHERE 
             Email = @Email;
 
-        PRINT 'Record updated successfully.';
+
+		PRINT 'Record Updated Successfully';
     END
     ELSE
     BEGIN
+        SET @OperationType = 'Inserted';
+
         -- INSERT A NEW RECORD
         INSERT INTO DemographicInformation (FirstName, LastName, Email, Salutation, Gender)
+		OUTPUT INSERTED.Id, @OperationType AS OperationType
         VALUES (@FirstName, @LastName, @Email, @Salutation, @Gender);
 
-        PRINT 'Record inserted successfully.';
+		PRINT 'Record Inserted Successfully';
+
     END
 END;
 
+
+-----------------------
 EXEC InsertOrUpdateDemographicInformation 
-    @FirstName = 'John', 
-    @LastName = 'Doe', 
-    @Email = 'john.doe@example.com', 
+    @FirstName = 'Prasad', 
+    @LastName = 'Dass', 
+    @Email = 'prasad38311@gmail.com', 
     @Salutation = 'Mr.', 
     @Gender = 'Male';
 
-EXEC InsertOrUpdateDemographicInformation 
-    @FirstName = 'Divya', 
-    @LastName = 'Bharathi', 
-    @Email = 'divya.bharathi@kanini.com', 
-    @Salutation = 'Ms.', 
-    @Gender = 'Female';
-
-EXEC InsertOrUpdateDemographicInformation 
-    @FirstName = 'Sai', 
-    @LastName = 'Priya', 
-    @Email = 'sai.priya@kanini.com', 
-    @Salutation = 'Ms.', 
-    @Gender = 'Female';
-
-SELECT * FROM DemographicInformation;

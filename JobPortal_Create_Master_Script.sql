@@ -296,5 +296,3 @@ CREATE TABLE AddressInformation (
 	CreatedAt DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (UserId) REFERENCES DemographicInformation(Id)
 );
-
-
