@@ -3,12 +3,14 @@ USE JobPortalDB
 -- CREATE GENDER MASTER TABLE --
 CREATE TABLE GenderMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(30),
 	value VARCHAR(50)
 );
 
 -- CREATE SALUTATION MASTER TABLE --
 CREATE TABLE SalutationMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(30),
 	value VARCHAR(50)
 );
 
@@ -16,6 +18,7 @@ CREATE TABLE SalutationMaster (
 -- CREATE INTEREST MASTER TABLE --
 CREATE TABLE InterestsMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(100),
 	value VARCHAR(100)
 );
 
@@ -70,21 +73,46 @@ CREATE TABLE CityMaster (
 
 
 -- INSERT GENDER MASTER TABLE --
-INSERT INTO GenderMaster (value)
+INSERT INTO GenderMaster (code, value)
 VALUES 
-    ('Male'),
-    ('Female'),
-    ('Other');
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('Other', 'Other');
 
 -- INSERT VALUES INTO SALUTATION MASTER TABLE --
-INSERT INTO SalutationMaster (value)
+INSERT INTO SalutationMaster (code, value)
 VALUES 
-    ('Mr.'),
-    ('Mrs.'),
-    ('Dr.'),
-    ('Er.'),
-    ('Jr.'),
-    ('Sr.');
+    ('Mr.', 'Mister'),
+    ('Mrs.', 'Mistress'),
+    ('Dr.', 'Doctor'),
+    ('Er.', 'Engineer'),
+    ('Jr.', 'Junior'),
+    ('Sr.', 'Senior');
+
+
+-- INSERT VALUES INTO INTEREST MASTER TABLE --
+INSERT INTO InterestsMaster (code, value)
+VALUES
+	('music', 'Music'),
+    ('sports', 'Sports'),
+    ('reading', 'Reading'),
+    ('travel', 'Travel'),
+    ('technology', 'Technology'),
+    ('art', 'Art'),
+    ('photography', 'Photography'),
+    ('cooking', 'Cooking'),
+    ('gaming', 'Gaming'),
+    ('fitness', 'Fitness'),
+    ('gardening', 'Gardening'),
+    ('movies', 'Movies'),
+    ('writing', 'Writing'),
+    ('fashion', 'Fashion'),
+    ('volunteering', 'Volunteering'),
+    ('hiking', 'Hiking'),
+    ('blogging', 'Blogging'),
+    ('yoga', 'Yoga'),
+    ('DIY', 'DIY (Do It Yourself)'),
+    ('investing', 'Investing')
 
 -- INSERT VALUES INTO ADDRESS TYPE MASTER TABLE --
 INSERT INTO AddressTypeMaster (value)

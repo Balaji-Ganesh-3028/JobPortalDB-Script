@@ -46,18 +46,28 @@ DELETE FROM UserInterest;
 DELETE FROM AddressInformation;
 DELETE FROM ExperienceInformation;
 DELETE FROM EducationInformation;
+DELETE FROM GenderMaster WHERE code = 'M.'
 
 DROP TABLE DemographicInformation;
 DROP TABLE UserInterest;
 DROP TABLE AddressInformation;
 DROP TABLE ExperienceInformation;
 DROP TABLE EducationInformation;
+DROP TABLE GenderMaster;
+DROP TABLE SalutationMaster;
+DROP TABLE InterestsMaster;
+
+
 
 SELECT * FROM DemographicInformation;
 SELECT * FROM UserInterest;
 SELECT * FROM EducationInformation;
 SELECT * FROM ExperienceInformation;
 SELECT * FROM AddressInformation;
+SELECT * FROM GenderMaster;
+SELECT * FROM SalutationMaster;
+SELECT * FROM InterestsMaster;
+
 
 
 ------DROP TVP AND PROCEDURE-------
