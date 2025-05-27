@@ -25,12 +25,14 @@ CREATE TABLE InterestsMaster (
 -- CREATE CREDENTIAL MASTER TABLE --
 CREATE TABLE CredentialMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(100),
 	value VARCHAR(100)
 );
 
 -- CREATE ADDRESS TYPE MASTER TABLE --
 CREATE TABLE AddressTypeMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(100),
 	value VARCHAR(100)
 );
 
@@ -115,23 +117,23 @@ VALUES
     ('investing', 'Investing')
 
 -- INSERT VALUES INTO ADDRESS TYPE MASTER TABLE --
-INSERT INTO AddressTypeMaster (value)
+INSERT INTO AddressTypeMaster (code, value)
 VALUES 
-    ('Present'),
-    ('Permanent'),
-    ('Business'),
-    ('Industry'),
-    ('Other');
+    ('PR', 'Present'),
+    ('PE', 'Permanent'),
+    ('BU', 'Business'),
+    ('IU', 'Industry'),
+    ('Others', 'Others');
 
 -- INSERT VALUES INTO CREDENTIAL MASTER TABLE --
-INSERT INTO CredentialMaster (value)
+INSERT INTO CredentialMaster (code, value)
 VALUES 
-    ('SSLC'),
-    ('HSC'),
-    ('UG'),
-    ('PG'),
-    ('Diploma'),
-    ('Others');
+    ('SSLC', 'Secondary School Leaving Certificate'),
+    ('HSC', 'Higher Secondary Certificate'),
+    ('UG', 'Undergraduate'),
+    ('PG', 'Postgraduate'),
+    ('Diploma', 'Diploma'),
+    ('Others', 'Others');
 
 -- INSERT VALUES INTO COUNTRY MASTER TABLE --
 INSERT INTO CountryMaster (code, value)
@@ -208,6 +210,7 @@ VALUES
 -- INSERT VALUES INTO CITY MASTER TABLE FOR INDIA (TAMIL NADU) --
 INSERT INTO CityMaster (code, value, state_id, country_id)
 VALUES 
+    ('TN', 'Chennai', 1, 1),
     ('CHN', 'Chennai', 1, 1),
     ('CBE', 'Coimbatore', 1, 1),
     ('MDU', 'Madurai', 1, 1),

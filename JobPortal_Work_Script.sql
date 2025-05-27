@@ -56,6 +56,8 @@ DROP TABLE EducationInformation;
 DROP TABLE GenderMaster;
 DROP TABLE SalutationMaster;
 DROP TABLE InterestsMaster;
+DROP TABLE CredentialMaster;
+DROP TABLE AddressTypeMaster;
 
 
 
@@ -67,7 +69,15 @@ SELECT * FROM AddressInformation;
 SELECT * FROM GenderMaster;
 SELECT * FROM SalutationMaster;
 SELECT * FROM InterestsMaster;
+SELECT * FROM CredentialMaster;
+SELECT * FROM AddressTypeMaster;
+SELECT * FROM CountryMaster;
+SELECT * FROM StateMaster;
+SELECT * FROM CityMaster;
 
+UPDATE AddressTypeMaster
+SET code = 'IN'
+WHERE id = 4;
 
 
 ------DROP TVP AND PROCEDURE-------
