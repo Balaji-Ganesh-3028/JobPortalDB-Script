@@ -21,7 +21,7 @@ Select * from UserInterest order by 1 asc
 
 CREATE TYPE INTREST_LIST AS TABLE(
 	[USERID] [int] NULL,
-	[INTREST_ID] [int] NULL
+	[INTREST_ID] VARCHAR(200) NULL
 )
 
 

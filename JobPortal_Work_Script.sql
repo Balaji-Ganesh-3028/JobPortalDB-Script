@@ -94,6 +94,10 @@ DROP PROCEDURE IF EXISTS InsertAddressInformation
 DROP TYPE IF EXISTS AddressInfoTableType
 
 
+DROP PROCEDURE IF EXISTS InsertUserInterests
+DROP TYPE IF EXISTS INTREST_LIST
+
+
 -- Truncate the table
 TRUNCATE TABLE UserInterest;
 TRUNCATE TABLE DemographicInformation;
