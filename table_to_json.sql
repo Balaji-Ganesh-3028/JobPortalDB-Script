@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE GetEmployeeDetails
+CREATE OR ALTER PROCEDURE GetEmployeesAsJson
 	@UserId INT
 AS
 BEGIN
@@ -88,4 +88,4 @@ BEGIN
 END
 
 
-EXEC GetEmployeeDetails @UserId = 12
+EXEC GetEmployeesAsJson @UserId = 12
