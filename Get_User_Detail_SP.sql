@@ -15,16 +15,17 @@ BEGIN
 		-- INTEREST DETAILS
 		(
 			SELECT 
-				im.id,
-				im.code,
-				im.value
+				im.id AS id,
+				im.code AS code,
+				im.value AS value,
+				ui.Id AS InterestId
 			FROM
 				UserInterest ui
 			INNER JOIN
 				InterestsMaster im ON ui.Interest = im.value
 			WHERE
 				ui.UserId = @UserId
-			FOR JSON AUTO, INCLUDE_NULL_VALUES
+			FOR JSON PATH, INCLUDE_NULL_VALUES
 		) AS Interests,
 		-- INTEREST DETAILS
 
@@ -88,4 +89,4 @@ BEGIN
 END
 
 
-EXEC GetEmployeeDetails @UserId = 5
+EXEC GetEmployeeDetails @UserId = 6
