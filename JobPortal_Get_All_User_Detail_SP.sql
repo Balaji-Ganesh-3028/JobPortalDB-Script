@@ -1,5 +1,4 @@
-CREATE OR ALTER PROCEDURE GetEmployeeDetails
-	@UserId INT
+CREATE OR ALTER PROCEDURE GetAllEmployees
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -23,7 +22,7 @@ BEGIN
 			INNER JOIN
 				InterestsMaster im ON ui.Interest = im.value
 			WHERE
-				ui.UserId = @UserId
+				ui.UserId = di.Id
 			FOR JSON AUTO, INCLUDE_NULL_VALUES
 		) AS Interests,
 		-- INTEREST DETAILS
@@ -36,13 +35,14 @@ BEGIN
 				ei.DegreeCertificate,
 				ei.Institution,
 				ei.StateOrProvince,
-				ei.City
+				ei.City,
+				ei.UserId7
 			FROM 
 				EducationInformation ei
 			WHERE
-				ei.UserId = @UserId
+				ei.UserId = di.Id
 			FOR JSON AUTO, INCLUDE_NULL_VALUES
-		) AS EducationDetails,
+		) AS EducationInformation,
 		-- EDUCATION INFORMATION
 
 		-- EXPERIENCE INFORMATION
@@ -57,7 +57,7 @@ BEGIN
 			FROM
 				ExperienceInformation exi
 			WHERE
-				exi.UserId = @UserId
+				exi.UserId = di.Id
 			FOR JSON AUTO, INCLUDE_NULL_VALUES
 		) AS ExperienceInformation,
 		-- EXPERIENCE INFORMATION
@@ -76,16 +76,14 @@ BEGIN
 			FROM
 				AddressInformation addi
 			WHERE
-				addi.UserId = @UserId
+				addi.UserId = di.Id
 			FOR JSON AUTO, INCLUDE_NULL_VALUES
 		) AS AddressInformation
 		-- ADDRESS INFORMATION
 
     FROM 
         DemographicInformation di
-	WHERE 
-		di.Id = @UserId
 END
 
 
-EXEC GetEmployeeDetails @UserId = 12
+EXEC GetAllEmployees

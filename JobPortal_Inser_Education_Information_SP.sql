@@ -4,24 +4,6 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Prevent recursive execution
-    IF TRIGGER_NESTLEVEL() > 1
-        RETURN;
-
-    -- Step 1: Update existing records
-    UPDATE EI
-    SET 
-        EI.CredentialInfo    = src.CredentialInfo,
-        EI.DegreeCertificate = src.DegreeCertificate,
-        EI.Institution       = src.Institution,
-        EI.City              = src.City,
-        EI.StateOrProvince   = src.StateOrProvince
-    FROM EducationInformation EI
-    INNER JOIN @EducationInfos src
-        ON EI.UserId = src.UserId
-		WHERE EI.Id = src.EducationId;
-
-    -- Step 2: Insert new records (that don't exist in the target table)
     INSERT INTO EducationInformation (UserId, CredentialInfo, DegreeCertificate, Institution, City, StateOrProvince)
     SELECT 
         src.UserId,

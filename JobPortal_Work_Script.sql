@@ -53,6 +53,8 @@ DROP TABLE UserInterest;
 DROP TABLE AddressInformation;
 DROP TABLE ExperienceInformation;
 DROP TABLE EducationInformation;
+
+--MASTER TABLE
 DROP TABLE GenderMaster;
 DROP TABLE SalutationMaster;
 DROP TABLE InterestsMaster;
@@ -106,6 +108,9 @@ TRUNCATE TABLE DemographicInformation;
 -- Reset the identity column
 DBCC CHECKIDENT ('UserInterest', RESEED, 1);
 DBCC CHECKIDENT ('DemographicInformation', RESEED, 1);
+DBCC CHECKIDENT ('AddressInformation', RESEED, 1);
+DBCC CHECKIDENT ('ExperienceInformation', RESEED, 1);
+DBCC CHECKIDENT ('EducationInformation', RESEED, 1);
 
 
 SELECT 
