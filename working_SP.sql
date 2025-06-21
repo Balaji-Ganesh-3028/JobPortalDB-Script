@@ -4,14 +4,6 @@ SELECT * FROM DemographicInformation;
 
 SELECT * FROM UserInterest;
 
-
-SELECT * FROM DemographicInformation AS DGI
-LEFT JOIN UserInterest AS UI ON DGI.Id = UI.UserId
---LEFT JOIN InterestsMaster AS IM ON UI.Interest = IM.id  
-WHERE DGI.Id = 12
-
-
-
 SELECT 
     im.id,
     im.code,
@@ -33,6 +25,7 @@ INNER JOIN
 WHERE UserId = 12
 
 SELECT * FROM InterestsMaster
+SELECT * FROM UserInterest
 
 UPDATE UserInterest
 	SET 
@@ -45,3 +38,16 @@ SELECT * FROM EducationInformation;
 
 SELECT * FROM ExperienceInformation WHERE UserId = 12;
 SELECT * FROM ExperienceInformation;
+
+
+SELECT 
+	im.id,
+	im.code,
+	im.value,
+	ui.Id AS InterestId
+FROM
+	UserInterest ui
+INNER JOIN
+	InterestsMaster im ON ui.Interest = im.value
+WHERE
+	ui.UserId = 6
