@@ -4,25 +4,6 @@ AS
 BEGIN
 	-- Prevent excessive message logging
     SET NOCOUNT ON;
-
-	-- Safety check to prevent recursive execution
-    IF TRIGGER_NESTLEVEL() > 1
-        RETURN;
-
-	-- Step 1: Update existing records
-	BEGIN
-	UPDATE EX
-	SET
-		EX.Employer = src.Employer,
-		EX.DOJ = src.DOJ,
-		EX.JobRole = src.JobRole,
-		EX.DurationInMonth = src.DurationInMonth
-	FROM ExperienceInformation EX
-	INNER JOIN @ExperienceInfos src
-		ON EX.UserId = src.UserId
-		WHERE EX.Id = src.ExperienceId;
-	END;
-
 	BEGIN
 		INSERT INTO ExperienceInformation (UserId, Employer, DOJ, JobRole, DurationInMonth)
 		SELECT 

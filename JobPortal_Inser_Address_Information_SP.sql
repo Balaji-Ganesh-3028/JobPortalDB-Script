@@ -5,27 +5,6 @@ BEGIN
 	-- Prevent excessive message logging
     SET NOCOUNT ON;
 
-	-- Safety check to prevent recursive execution
-    IF TRIGGER_NESTLEVEL() > 1
-        RETURN;
-
-	-- Step 1: Update existing records
-	BEGIN
-	UPDATE AD
-	SET
-		AD.AddressType = src.AddressType,
-		AD.Country = src.Country,
-		AD.StateOrProvince = src.StateOrProvince,
-		AD.City = src.City,
-		AD.DoorNoStreet = src.DoorNoStreet,
-		AD.Pincode = src.Pincode
-	FROM AddressInformation AD
-	INNER JOIN @AddressInfos src
-		ON AD.UserId = src.UserId
-		WHERE AD.Id = src.AddressId;
-	END;
-
-	
 	BEGIN
 		INSERT INTO AddressInformation (UserId, AddressType, Country, StateOrProvince, City, DoorNoStreet, Pincode)
 		SELECT

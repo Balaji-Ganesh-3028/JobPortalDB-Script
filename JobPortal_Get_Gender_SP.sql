@@ -1,0 +1,10 @@
+CREATE OR ALTER PROCEDURE getGender
+AS
+
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * from GenderMaster
+END;
+
+EXEC getGender;

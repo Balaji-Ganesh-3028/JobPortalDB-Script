@@ -1,0 +1,10 @@
+CREATE OR ALTER PROCEDURE getCountry
+AS
+
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * from CountryMaster
+END;
+
+EXEC getCountry;

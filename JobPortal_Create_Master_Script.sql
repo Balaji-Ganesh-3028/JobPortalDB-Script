@@ -3,12 +3,14 @@ USE JobPortalDB
 -- CREATE GENDER MASTER TABLE --
 CREATE TABLE GenderMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(30),
 	value VARCHAR(50)
 );
 
 -- CREATE SALUTATION MASTER TABLE --
 CREATE TABLE SalutationMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(30),
 	value VARCHAR(50)
 );
 
@@ -16,18 +18,21 @@ CREATE TABLE SalutationMaster (
 -- CREATE INTEREST MASTER TABLE --
 CREATE TABLE InterestsMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(100),
 	value VARCHAR(100)
 );
 
 -- CREATE CREDENTIAL MASTER TABLE --
 CREATE TABLE CredentialMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(100),
 	value VARCHAR(100)
 );
 
 -- CREATE ADDRESS TYPE MASTER TABLE --
 CREATE TABLE AddressTypeMaster (
 	id INT IDENTITY(1,1),
+	code VARCHAR(100),
 	value VARCHAR(100)
 );
 
@@ -70,40 +75,65 @@ CREATE TABLE CityMaster (
 
 
 -- INSERT GENDER MASTER TABLE --
-INSERT INTO GenderMaster (value)
+INSERT INTO GenderMaster (code, value)
 VALUES 
-    ('Male'),
-    ('Female'),
-    ('Other');
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('Other', 'Other');
 
 -- INSERT VALUES INTO SALUTATION MASTER TABLE --
-INSERT INTO SalutationMaster (value)
+INSERT INTO SalutationMaster (code, value)
 VALUES 
-    ('Mr.'),
-    ('Mrs.'),
-    ('Dr.'),
-    ('Er.'),
-    ('Jr.'),
-    ('Sr.');
+    ('Mr.', 'Mister'),
+    ('Mrs.', 'Mistress'),
+    ('Dr.', 'Doctor'),
+    ('Er.', 'Engineer'),
+    ('Jr.', 'Junior'),
+    ('Sr.', 'Senior');
+
+
+-- INSERT VALUES INTO INTEREST MASTER TABLE --
+INSERT INTO InterestsMaster (code, value)
+VALUES
+	('music', 'Music'),
+    ('sports', 'Sports'),
+    ('reading', 'Reading'),
+    ('travel', 'Travel'),
+    ('technology', 'Technology'),
+    ('art', 'Art'),
+    ('photography', 'Photography'),
+    ('cooking', 'Cooking'),
+    ('gaming', 'Gaming'),
+    ('fitness', 'Fitness'),
+    ('gardening', 'Gardening'),
+    ('movies', 'Movies'),
+    ('writing', 'Writing'),
+    ('fashion', 'Fashion'),
+    ('volunteering', 'Volunteering'),
+    ('hiking', 'Hiking'),
+    ('blogging', 'Blogging'),
+    ('yoga', 'Yoga'),
+    ('DIY', 'DIY (Do It Yourself)'),
+    ('investing', 'Investing')
 
 -- INSERT VALUES INTO ADDRESS TYPE MASTER TABLE --
-INSERT INTO AddressTypeMaster (value)
+INSERT INTO AddressTypeMaster (code, value)
 VALUES 
-    ('Present'),
-    ('Permanent'),
-    ('Business'),
-    ('Industry'),
-    ('Other');
+    ('PR', 'Present'),
+    ('PE', 'Permanent'),
+    ('BU', 'Business'),
+    ('IU', 'Industry'),
+    ('Others', 'Others');
 
 -- INSERT VALUES INTO CREDENTIAL MASTER TABLE --
-INSERT INTO CredentialMaster (value)
+INSERT INTO CredentialMaster (code, value)
 VALUES 
-    ('SSLC'),
-    ('HSC'),
-    ('UG'),
-    ('PG'),
-    ('Diploma'),
-    ('Others');
+    ('SSLC', 'Secondary School Leaving Certificate'),
+    ('HSC', 'Higher Secondary Certificate'),
+    ('UG', 'Undergraduate'),
+    ('PG', 'Postgraduate'),
+    ('Diploma', 'Diploma'),
+    ('Others', 'Others');
 
 -- INSERT VALUES INTO COUNTRY MASTER TABLE --
 INSERT INTO CountryMaster (code, value)
@@ -180,6 +210,7 @@ VALUES
 -- INSERT VALUES INTO CITY MASTER TABLE FOR INDIA (TAMIL NADU) --
 INSERT INTO CityMaster (code, value, state_id, country_id)
 VALUES 
+    ('TN', 'Chennai', 1, 1),
     ('CHN', 'Chennai', 1, 1),
     ('CBE', 'Coimbatore', 1, 1),
     ('MDU', 'Madurai', 1, 1),
