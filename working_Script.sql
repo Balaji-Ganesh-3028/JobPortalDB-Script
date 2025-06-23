@@ -48,7 +48,7 @@ SELECT * FROM CountryMaster;
 SELECT * FROM StateMaster;
 SELECT * FROM CityMaster;
 
-
+SELECT * FROM UpdateAddressInfoTableType;
 
 ------DROP TVP AND PROCEDURE-------
 --EXPERIENCE 

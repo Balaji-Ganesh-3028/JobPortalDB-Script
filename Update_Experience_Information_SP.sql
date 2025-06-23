@@ -38,7 +38,7 @@ INSERT INTO @ExperienceUpdates (
     DurationInMonth
 )
 VALUES
-(1, 1, 'Google India Pvt Ltd', '2020-06-01', 'Senior Software Engineer', 48);
+(1, 1, 'Google India Pvt Ltd Update', '2025-06-23', 'Senior Software Engineer', 48);
 
 -- Execute the update procedure
 EXEC UpdateExperienceInformation @UpdateExperienceInfo = @ExperienceUpdates;
