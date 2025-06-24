@@ -15,8 +15,6 @@ BEGIN
 		-- INTEREST DETAILS
 		(
 			SELECT 
-				im.id AS id,
-				im.code AS code,
 				im.value AS value,
 				ui.Id AS InterestId
 			FROM
